@@ -3,6 +3,7 @@ import { shade } from 'polished';
 
 interface Property {
   error: boolean;
+  success: string;
 }
 
 export const ContainerForm = styled.form`
@@ -43,8 +44,18 @@ export const Input = styled.input<Property>`
       border: 2px solid #c53030;
       border-right: 0;
     `}
+  ${(props) =>
+    props.success &&
+    css`
+      border: 2px solid #04d361;
+      border-right: 0;
+    `}
 `;
 
 export const ErrorInput = styled.p`
   color: #c53030;
+`;
+
+export const SuccessStatus = styled.p`
+  color: #04d361;
 `;

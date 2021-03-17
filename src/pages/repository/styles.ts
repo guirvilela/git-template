@@ -45,3 +45,8 @@ export const UserInfo = styled.aside`
     }
   }
 `;
+
+export const Loading = styled.div`
+  width: 100%;
+  text-align: center;
+`;

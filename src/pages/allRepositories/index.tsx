@@ -11,6 +11,7 @@ import { Container, ListRepositories } from './styles';
 
 const AllRepository = () => {
   const [failSearch, setFailSearch] = useState('');
+  const [successStatus, setSuccessStatus] = useState('');
   const [repositories, setRepositories] = useState<Repository[]>(() => {
     const storageRepository = localStorage.getItem('@git-project');
 
@@ -26,6 +27,7 @@ const AllRepository = () => {
       const { data } = await api.get(`/repos/${value}`);
 
       setRepositories([...repositories, data]);
+      setSuccessStatus('Reposítório adicionado com sucesso!');
       setFailSearch('');
     } catch (error) {
       setFailSearch('Falha ao encontrar repositório');
@@ -45,6 +47,7 @@ const AllRepository = () => {
       <InputComponent
         onSearchRepo={searchRepo}
         catch={failSearch}
+        success={successStatus}
       ></InputComponent>
       <ListRepositories>
         {repositories.map((el: Repository) => (

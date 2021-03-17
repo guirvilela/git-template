@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import Logo from '../../assets/Logo.svg';
 import { HiChevronLeft } from 'react-icons/hi';
+import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
+import Loader from 'react-loader-spinner';
 
 import { Link, useParams } from 'react-router-dom';
-import { Container, Header, RepositoryInfo, UserInfo } from './styles';
+import { Container, Header, Loading, RepositoryInfo, UserInfo } from './styles';
 import { Description } from '../../components/Repositories/styles';
 import Issues, { IssuesRequest } from '../../components/Issues/Issues';
 import api from '../../api/api';
@@ -52,30 +54,40 @@ const RepositoryComponent = (props: any) => {
 
         <img src={Logo} alt="Logo"></img>
       </Header>
-
-      <RepositoryInfo>
-        <img src={repository?.owner.avatar_url} alt={repository?.owner.login} />
-        <Description>
-          <h2>{repository?.full_name}</h2>
-          <p>{repository?.description}</p>
-        </Description>
-      </RepositoryInfo>
-
-      <UserInfo>
-        <div>
-          <h3>{repository?.stargazers_count}</h3>
-          <p>Stars</p>
-        </div>
-        <div>
-          <h3>{repository?.forks_count}</h3>
-          <p>Forks</p>
-        </div>
-        <div>
-          <h3>{repository?.open_issues_count}</h3>
-          <p>Issue</p>
-        </div>
-      </UserInfo>
-
+      {repository ? (
+        <RepositoryInfo>
+          <img
+            src={repository?.owner.avatar_url}
+            alt={repository?.owner.login}
+          />
+          <Description>
+            <h2>{repository?.full_name}</h2>
+            <p>{repository?.description}</p>
+          </Description>
+        </RepositoryInfo>
+      ) : (
+        ''
+      )}
+      {repository ? (
+        <UserInfo>
+          <div>
+            <h3>{repository?.stargazers_count}</h3>
+            <p>Stars</p>
+          </div>
+          <div>
+            <h3>{repository?.forks_count}</h3>
+            <p>Forks</p>
+          </div>
+          <div>
+            <h3>{repository?.open_issues_count}</h3>
+            <p>Issue</p>
+          </div>
+        </UserInfo>
+      ) : (
+        <Loading>
+          <Loader type="ThreeDots" color="#41414d" height={80} width={80} />
+        </Loading>
+      )}
       {issues.map((el: IssuesRequest) => (
         <Issues issues={el}></Issues>
       ))}
